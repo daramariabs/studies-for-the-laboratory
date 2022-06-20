@@ -1,0 +1,5 @@
+[MFLOG|0|2022-06-20T02:12:17.845930Z|runtime|b8da7285-f311-4617-9e9a-7551b8c52348]Fitting 5 folds for each of 9 candidates, totalling 45 fits
+[MFLOG|0|2022-06-20T02:12:21.919303Z|runtime|7d26d23d-762c-411d-b697-afe56ca6a09b]Best parameters:
+[MFLOG|0|2022-06-20T02:12:22.587697Z|runtime|1d0041a4-a444-4e34-96d7-de7dc8e0d477]{'vect__min_df': 1, 'vect__ngram_range': (1, 2), 'vect__smooth_idf': True}
+[MFLOG|0|2022-06-20T02:12:22.588226Z|runtime|88bc4534-937f-40ba-887e-55cd997954dc]Best scorers: 
+[MFLOG|0|2022-06-20T02:12:22.588622Z|runtime|ef1777ce-94a4-443d-9c3d-5581853f55e8]0.9200000000000002

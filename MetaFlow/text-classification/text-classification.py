@@ -24,16 +24,17 @@ class TextClassification(FlowSpec):
         self.x_test = test['texto']
         self.y_test = test['classificacao']
 
+
+        self.next(self.preprocessing)
+
+    @step
+    def preprocessing(self):
         self.scoring = {
             'f1_micro',
             'f1_macro',
             'f1_weighted'
         }
 
-        self.next(self.preprocessing)
-
-    @step
-    def preprocessing(self):
         self.pipeline = Pipeline([
             ('vect', TfidfVectorizer()),
             ('clf', MultinomialNB())
@@ -46,6 +47,7 @@ class TextClassification(FlowSpec):
         }
 
         self.next(self.train)
+
     @step
     def train(self):
         grid_search = GridSearchCV(estimator=self.pipeline, param_grid=self.parameters, n_jobs=-1, verbose=1, scoring=self.scoring, refit='f1_micro')
@@ -57,13 +59,17 @@ class TextClassification(FlowSpec):
         print("Best scorers: ")
         print(grid_search.best_score_)
 
-        tfidf_naive = grid_search.best_estimator_
+        self.tfidf_naive = grid_search.best_estimator_
+        
 
-        #Previsão
-        print('F1-Score (micro) Test: ', f1_score(self.y_test, tfidf_naive.predict(self.x_test), average='micro'))
-
-        self.next(self.end)
+        self.next(self.test)
     
+    @step
+    def test(self):
+        print('F1-Score (micro) Test: ', f1_score(self.y_test, self.tfidf_naive.predict(self.x_test), average='micro'))
+        
+        self.next(self.end)
+   
     @step
     def end(self):
         pass
