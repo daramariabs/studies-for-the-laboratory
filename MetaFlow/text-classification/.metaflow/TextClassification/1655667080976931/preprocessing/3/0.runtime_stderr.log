@@ -1,0 +1,30 @@
+[MFLOG|0|2022-06-19T19:31:35.001958Z|runtime|df6e0b5c-e02a-492f-bf6f-f402c87fba87]<flow TextClassification step preprocessing> failed:
+[MFLOG|0|2022-06-19T19:31:35.017122Z|runtime|c72efa9a-e58b-4c59-ba25-dc16a347d64b]    Internal error
+[MFLOG|0|2022-06-19T19:31:35.063377Z|runtime|b2bce9eb-9f62-4b9c-9b69-dc7cbee8742b]Traceback (most recent call last):
+[MFLOG|0|2022-06-19T19:31:35.064449Z|runtime|399651df-0a2f-431e-a694-f42f45d50a68]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 1101, in main
+[MFLOG|0|2022-06-19T19:31:35.065285Z|runtime|ac6bdf92-2d41-443d-a4d3-58827c5cced4]    start(auto_envvar_prefix="METAFLOW", obj=state)
+[MFLOG|0|2022-06-19T19:31:35.066053Z|runtime|4b5efa62-c3ae-4e2f-bb7e-06b82120d0ec]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+[MFLOG|0|2022-06-19T19:31:35.066794Z|runtime|677e3d21-041e-4295-8a2b-3d6698f2afc9]    return self.main(args, kwargs)
+[MFLOG|0|2022-06-19T19:31:35.227996Z|runtime|0826305d-70a7-48e5-ab2f-90d7a3bb8533]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+[MFLOG|0|2022-06-19T19:31:35.228390Z|runtime|7f4ca6be-a805-44c3-be72-04bc382811d7]    rv = self.invoke(ctx)
+[MFLOG|0|2022-06-19T19:31:35.228612Z|runtime|42678250-ce95-4d93-b654-83d69aff91a6]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1259, in invoke
+[MFLOG|0|2022-06-19T19:31:35.228839Z|runtime|5f93f58e-8f1c-4d3d-9144-dc6b19c73a8d]    return _process_result(sub_ctx.command.invoke(sub_ctx))
+[MFLOG|0|2022-06-19T19:31:35.229086Z|runtime|e85c489a-9dde-430a-aa21-975df03816a1]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+[MFLOG|0|2022-06-19T19:31:35.229458Z|runtime|551ada6e-2fc7-4da0-92f3-5e4cbad92853]    return ctx.invoke(self.callback, ctx.params)
+[MFLOG|0|2022-06-19T19:31:35.229795Z|runtime|9b3da904-a9ea-4995-aef4-2dcb00d026d2]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+[MFLOG|0|2022-06-19T19:31:35.230166Z|runtime|a1c4a91e-9792-434a-a9d6-392e94d315a5]    return callback(args, kwargs)
+[MFLOG|0|2022-06-19T19:31:35.230527Z|runtime|2f6ccd1a-ce6f-489b-9666-9e6e2bf25327]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+[MFLOG|0|2022-06-19T19:31:35.230851Z|runtime|c9fd67b4-2e7b-4539-83e0-312b32722490]    return f(get_current_context(), args, kwargs)
+[MFLOG|0|2022-06-19T19:31:35.231182Z|runtime|5906804d-6ecd-4a58-a022-ef6b04b9e5b1]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 556, in step
+[MFLOG|0|2022-06-19T19:31:35.231514Z|runtime|1848cba0-d39d-4e65-9b04-5ed6c8c6fc74]    task.run_step(
+[MFLOG|0|2022-06-19T19:31:35.231859Z|runtime|8a00bced-d986-4d4a-8e8b-b594418cb829]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 554, in run_step
+[MFLOG|0|2022-06-19T19:31:35.232192Z|runtime|18b76bf3-c1a9-4cdc-9e01-5eead05c73c0]    self._exec_step_function(step_func)
+[MFLOG|0|2022-06-19T19:31:35.232527Z|runtime|1f2225a1-d7f4-4107-b573-b0b94df38e7c]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 53, in _exec_step_function
+[MFLOG|0|2022-06-19T19:31:35.232859Z|runtime|99388360-ac79-4a52-a44f-77848db4215d]    step_function()
+[MFLOG|0|2022-06-19T19:31:35.233249Z|runtime|e5272e41-f1b9-43a5-8ba3-a6a6303d1c5d]  File "/home/dara/Documentos/UnB/AILAB/PGDF - OSIRIS/MetaFlow/text-classification/text-classification.py", line 35, in preprocessing
+[MFLOG|0|2022-06-19T19:31:35.233589Z|runtime|d46a58d6-89ec-4468-9e60-02afb6f69cab]    ('vect', self.TfidfVectorizer()),
+[MFLOG|0|2022-06-19T19:31:35.233934Z|runtime|3e1e176b-1399-484f-94a7-413a83a18c22]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/flowspec.py", line 223, in __getattr__
+[MFLOG|0|2022-06-19T19:31:35.234264Z|runtime|42a90a1b-7512-400c-be74-9a69983c5352]    raise AttributeError("Flow %s has no attribute '%s'" % (self.name, name))
+[MFLOG|0|2022-06-19T19:31:35.234594Z|runtime|38374784-ffe8-43fa-81b7-39296756ef2f]AttributeError: Flow TextClassification has no attribute 'TfidfVectorizer'
+[MFLOG|0|2022-06-19T19:31:35.234930Z|runtime|a9c9b228-d0bc-41b8-aa7a-93c340e7b10c]
+[MFLOG|0|2022-06-19T19:31:35.236022Z|runtime|ea9aa717-0152-4c4a-8a25-c902afbe5df2]Task failed.
