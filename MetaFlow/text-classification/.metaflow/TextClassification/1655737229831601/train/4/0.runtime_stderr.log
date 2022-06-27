@@ -1,0 +1,74 @@
+[MFLOG|0|2022-06-20T15:00:41.313688Z|runtime|db45acbc-3898-4c98-8c66-cee0ea0c2001]<flow TextClassification step train> failed:
+[MFLOG|0|2022-06-20T15:00:41.326894Z|runtime|fd68141b-9ca7-42ce-bbb0-82441845e86f]    Internal error
+[MFLOG|0|2022-06-20T15:00:41.328771Z|runtime|063a372a-43fe-4325-8683-493c5b49290f]joblib.externals.loky.process_executor._RemoteTraceback: 
+[MFLOG|0|2022-06-20T15:00:41.329167Z|runtime|914022a9-079a-496a-bd4a-802f1458bde0]"""
+[MFLOG|0|2022-06-20T15:00:41.329428Z|runtime|baee3771-f8d4-4070-8bf5-a87c6884e98a]Traceback (most recent call last):
+[MFLOG|0|2022-06-20T15:00:41.329694Z|runtime|4c1fb53a-6177-4ddc-be6f-5877166b92dc]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 436, in _process_worker
+[MFLOG|0|2022-06-20T15:00:41.329961Z|runtime|512a4a4c-3211-4c57-917c-e47477dddb60]    r = call_item()
+[MFLOG|0|2022-06-20T15:00:41.330214Z|runtime|911e46ea-fc54-47af-8666-5ddb9af78c8c]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 288, in __call__
+[MFLOG|0|2022-06-20T15:00:41.330472Z|runtime|5902fb48-d8e4-4c70-981f-1ddfc3815999]    return self.fn(self.args, self.kwargs)
+[MFLOG|0|2022-06-20T15:00:41.330723Z|runtime|2ecac726-9d0e-4fcb-9b52-9fc9d2b80cbd]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 595, in __call__
+[MFLOG|0|2022-06-20T15:00:41.330984Z|runtime|304d329d-94a1-4ce1-9442-4ba3276a098a]    return self.func(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.331236Z|runtime|d8cede49-d734-4242-b7bc-39d094e36640]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 262, in __call__
+[MFLOG|0|2022-06-20T15:00:41.331487Z|runtime|2625e6d6-8899-43c8-a186-5bcc5bed25a5]    return [func(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.331738Z|runtime|a0859bdf-5284-489d-930d-6f3ed9ba4143]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 262, in <listcomp>
+[MFLOG|0|2022-06-20T15:00:41.331987Z|runtime|fbde3568-e25e-48bd-9244-afd8222b6735]    return [func(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.332232Z|runtime|feca85d0-6aea-4fa7-8f77-ff430f9b45f7]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/utils/fixes.py", line 216, in __call__
+[MFLOG|0|2022-06-20T15:00:41.332473Z|runtime|f7baf9fb-8040-41f3-a0a3-28a2f2ca91fe]    return self.function(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.332715Z|runtime|357120c6-d166-4cee-bcef-ec5f8e7b1a9e]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_validation.py", line 668, in _fit_and_score
+[MFLOG|0|2022-06-20T15:00:41.332982Z|runtime|83c46b6e-40a2-451d-81fb-eab40f8450ed]    estimator = estimator.set_params(cloned_parameters)
+[MFLOG|0|2022-06-20T15:00:41.333219Z|runtime|22687c89-e4f4-4fc4-a181-b61e01af9e72]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/pipeline.py", line 188, in set_params
+[MFLOG|0|2022-06-20T15:00:41.333449Z|runtime|ce4d5c94-228b-442d-be58-8fbf21b28e17]    self._set_params("steps", kwargs)
+[MFLOG|0|2022-06-20T15:00:41.333690Z|runtime|2b3cbd7b-32a8-4b73-9e91-d5dec32672c4]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/utils/metaestimators.py", line 54, in _set_params
+[MFLOG|0|2022-06-20T15:00:41.333922Z|runtime|92b0d3c7-b5d5-4fee-ae5a-aa6448e6da33]    super().set_params(params)
+[MFLOG|0|2022-06-20T15:00:41.334169Z|runtime|c3c7439a-ee3e-495d-a75b-10a297ad96ac]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/base.py", line 258, in set_params
+[MFLOG|0|2022-06-20T15:00:41.334425Z|runtime|911ee86c-92c8-427d-bac1-f24447047c6d]    valid_params[key].set_params(sub_params)
+[MFLOG|0|2022-06-20T15:00:41.334667Z|runtime|f298cac5-939d-487a-8419-087cc409e6c9]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/base.py", line 245, in set_params
+[MFLOG|0|2022-06-20T15:00:41.334908Z|runtime|d007f822-dcb2-4071-be02-a53c28cecb58]    raise ValueError(
+[MFLOG|0|2022-06-20T15:00:41.335149Z|runtime|87c2c820-51e9-4ef1-bb82-8db470ec0b33]ValueError: Invalid parameter  strip_accents for estimator TfidfVectorizer(). Check the list of available parameters with `estimator.get_params().keys()`.
+[MFLOG|0|2022-06-20T15:00:41.335416Z|runtime|37ffffc4-724a-4a1a-9a0d-49de0e482cff]"""
+[MFLOG|0|2022-06-20T15:00:41.335658Z|runtime|c401493c-6e15-40d3-9b4f-f7a0470527b0]
+[MFLOG|0|2022-06-20T15:00:41.335900Z|runtime|83246336-fab3-4b98-a967-843642997430]The above exception was the direct cause of the following exception:
+[MFLOG|0|2022-06-20T15:00:41.336138Z|runtime|f6a7be9d-e944-471c-b1df-077b72ae0c67]
+[MFLOG|0|2022-06-20T15:00:41.336382Z|runtime|af4e282d-584b-454d-a556-8ddad3846a5f]Traceback (most recent call last):
+[MFLOG|0|2022-06-20T15:00:41.336625Z|runtime|16c8d231-869f-44b0-aa7f-1c9fef395490]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 1101, in main
+[MFLOG|0|2022-06-20T15:00:41.336855Z|runtime|a5b00e06-404c-4d44-a17f-dfd287d4a72f]    start(auto_envvar_prefix="METAFLOW", obj=state)
+[MFLOG|0|2022-06-20T15:00:41.339452Z|runtime|33d9c913-0e05-4bc3-bf6e-2ee13c5924d1]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+[MFLOG|0|2022-06-20T15:00:41.339793Z|runtime|9ada4581-2cd7-4ee7-87d6-31533f79eb15]    return self.main(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.340137Z|runtime|2ca3ecda-2f5a-4702-82fc-7c24d54056b1]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+[MFLOG|0|2022-06-20T15:00:41.340415Z|runtime|5d421a8d-a4bb-4505-bcbf-56ce16059597]    rv = self.invoke(ctx)
+[MFLOG|0|2022-06-20T15:00:41.340682Z|runtime|b5cdf2b0-d77d-4ce5-ae26-506614d1f470]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1259, in invoke
+[MFLOG|0|2022-06-20T15:00:41.341624Z|runtime|52bd6d4e-83e3-4c6c-829c-feaba1e3060f]    return _process_result(sub_ctx.command.invoke(sub_ctx))
+[MFLOG|0|2022-06-20T15:00:41.341984Z|runtime|734dcabd-4546-485f-a2fb-c7616cc89cf1]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+[MFLOG|0|2022-06-20T15:00:41.344112Z|runtime|9dde87c8-f50c-4703-87fa-6459be19946b]    return ctx.invoke(self.callback, ctx.params)
+[MFLOG|0|2022-06-20T15:00:41.344473Z|runtime|28682ef0-0105-49b8-b1ae-d10fa74ca550]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+[MFLOG|0|2022-06-20T15:00:41.344763Z|runtime|c8cc008a-9a1f-4675-8284-dcf6c4834875]    return callback(args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.345047Z|runtime|af93000c-ab8c-4237-ae89-44cbd8f11110]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+[MFLOG|0|2022-06-20T15:00:41.345307Z|runtime|75c9718f-673c-4d05-8628-a89e1fe50286]    return f(get_current_context(), args, kwargs)
+[MFLOG|0|2022-06-20T15:00:41.345560Z|runtime|0426f95e-5d83-4ef2-87f5-780cd8cb76ae]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 556, in step
+[MFLOG|0|2022-06-20T15:00:41.345824Z|runtime|a5c9f3ea-521c-409b-8391-824c3bd40bea]    task.run_step(
+[MFLOG|0|2022-06-20T15:00:41.346099Z|runtime|56404c6d-e6f6-440a-abaa-696e0b096531]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 554, in run_step
+[MFLOG|0|2022-06-20T15:00:41.346360Z|runtime|49db2e97-2b42-4719-b545-efb4c9f0ac65]    self._exec_step_function(step_func)
+[MFLOG|0|2022-06-20T15:00:41.346688Z|runtime|80218750-b6a5-4417-9930-2d8553f4111b]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 53, in _exec_step_function
+[MFLOG|0|2022-06-20T15:00:41.348692Z|runtime|de464faa-5880-4626-9ef4-eaf877060a33]    step_function()
+[MFLOG|0|2022-06-20T15:00:41.349032Z|runtime|d5de50fa-1221-4fdf-bbbf-cff4516ad463]  File "/home/dara/Documentos/UnB/AILAB/PGDF - OSIRIS/studies-for-the-laboratory/MetaFlow/text-classification/text-classification.py", line 55, in train
+[MFLOG|0|2022-06-20T15:00:41.349328Z|runtime|bb599f0b-5f00-4272-88f8-cc8b4ed0915c]    grid_search.fit(self.x_train, self.y_train)
+[MFLOG|0|2022-06-20T15:00:41.349641Z|runtime|e05aef9f-205b-4c28-9491-70d1113b2f7a]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 891, in fit
+[MFLOG|0|2022-06-20T15:00:41.349954Z|runtime|c6b2323c-5dcf-47b9-a637-9ed93d5b145a]    self._run_search(evaluate_candidates)
+[MFLOG|0|2022-06-20T15:00:41.350252Z|runtime|d942cc14-432e-4de9-9d37-7db602b48825]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 1392, in _run_search
+[MFLOG|0|2022-06-20T15:00:41.350629Z|runtime|1840273b-2e74-43af-885a-41978906d6b1]    evaluate_candidates(ParameterGrid(self.param_grid))
+[MFLOG|0|2022-06-20T15:00:41.351069Z|runtime|56bbd6fe-c1b4-4308-ab8b-1a40975001a3]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 838, in evaluate_candidates
+[MFLOG|0|2022-06-20T15:00:41.351557Z|runtime|ee0d79e5-1f13-4b0d-aa58-600e01b219a0]    out = parallel(
+[MFLOG|0|2022-06-20T15:00:41.351951Z|runtime|04ca9c72-29de-4ed6-b99b-b72c649fa84b]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 1056, in __call__
+[MFLOG|0|2022-06-20T15:00:41.352339Z|runtime|daced4dc-1714-46cc-aaba-347f2b6f2c2e]    self.retrieve()
+[MFLOG|0|2022-06-20T15:00:41.352747Z|runtime|00ad1416-5cbe-441d-a72c-070022abb0b4]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 935, in retrieve
+[MFLOG|0|2022-06-20T15:00:41.355096Z|runtime|8ff0b68b-5069-4fac-ab1b-eaa0e2f1c762]    self._output.extend(job.get(timeout=self.timeout))
+[MFLOG|0|2022-06-20T15:00:41.355496Z|runtime|20c4e953-7c9d-459a-96eb-35db486481f4]  File "/home/dara/anaconda3/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 542, in wrap_future_result
+[MFLOG|0|2022-06-20T15:00:41.355809Z|runtime|a31272bf-c7af-46d9-a175-f686aeb3fa22]    return future.result(timeout=timeout)
+[MFLOG|0|2022-06-20T15:00:41.707143Z|runtime|2e166fa7-5fed-4bf2-8018-ab1899994e7e]  File "/home/dara/anaconda3/lib/python3.9/concurrent/futures/_base.py", line 446, in result
+[MFLOG|0|2022-06-20T15:00:41.707613Z|runtime|fb804dd8-86ed-4619-b75c-3ac92c4637a9]    return self.__get_result()
+[MFLOG|0|2022-06-20T15:00:41.707896Z|runtime|920e161d-f01e-466c-b0f1-14b9e8166bf5]  File "/home/dara/anaconda3/lib/python3.9/concurrent/futures/_base.py", line 391, in __get_result
+[MFLOG|0|2022-06-20T15:00:41.708068Z|runtime|66b7cea5-df42-4ccb-8e48-3dadb684b7c9]    raise self._exception
+[MFLOG|0|2022-06-20T15:00:41.708234Z|runtime|b3249b7d-efc3-4790-b641-1617a4de7413]ValueError: Invalid parameter  strip_accents for estimator TfidfVectorizer(). Check the list of available parameters with `estimator.get_params().keys()`.
+[MFLOG|0|2022-06-20T15:00:41.708442Z|runtime|01415fb4-7bc7-4f6c-a29d-bf301ee132bb]
+[MFLOG|0|2022-06-20T15:00:41.709240Z|runtime|1546b5cd-355c-409d-94ef-e9b693105b4b]Task failed.

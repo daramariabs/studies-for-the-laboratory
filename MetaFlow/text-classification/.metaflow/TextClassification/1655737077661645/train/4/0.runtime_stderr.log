@@ -1,0 +1,32 @@
+[MFLOG|0|2022-06-20T14:58:06.687009Z|runtime|150c3e03-e1d3-4b50-a067-32570de90be4]<flow TextClassification step train> failed:
+[MFLOG|0|2022-06-20T14:58:06.693407Z|runtime|e4f5c931-ebb8-4745-bea6-ec10dceda873]    Internal error
+[MFLOG|0|2022-06-20T14:58:06.695123Z|runtime|f479236a-53fa-4d9a-86dc-6dac99337f99]Traceback (most recent call last):
+[MFLOG|0|2022-06-20T14:58:06.695514Z|runtime|0ffd853b-687e-4238-a7b3-39346fff5c3e]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 1101, in main
+[MFLOG|0|2022-06-20T14:58:06.695807Z|runtime|1d829733-5e76-434a-b40f-61e9bb63cc5e]    start(auto_envvar_prefix="METAFLOW", obj=state)
+[MFLOG|0|2022-06-20T14:58:06.696087Z|runtime|9c3656fd-5995-4a51-b7f7-faac209e3884]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+[MFLOG|0|2022-06-20T14:58:06.696367Z|runtime|6a364318-0cf5-4e83-b7a4-d92aeb1f774d]    return self.main(args, kwargs)
+[MFLOG|0|2022-06-20T14:58:06.990681Z|runtime|f6add75a-4ec7-4bc4-a63a-10da2b5d6934]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+[MFLOG|0|2022-06-20T14:58:06.990985Z|runtime|9b831600-9ac4-4709-b1fb-37e06e75abaf]    rv = self.invoke(ctx)
+[MFLOG|0|2022-06-20T14:58:06.991177Z|runtime|0cc83f97-25cf-4d6d-87de-6fbb3a87b24b]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1259, in invoke
+[MFLOG|0|2022-06-20T14:58:06.991402Z|runtime|17c35367-4a31-4664-9ca7-ecbd813fd02d]    return _process_result(sub_ctx.command.invoke(sub_ctx))
+[MFLOG|0|2022-06-20T14:58:06.991605Z|runtime|2d5c7549-ab2b-4707-9483-6c343076d288]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+[MFLOG|0|2022-06-20T14:58:06.991808Z|runtime|e01d04e6-e986-4144-bedd-450b72554945]    return ctx.invoke(self.callback, ctx.params)
+[MFLOG|0|2022-06-20T14:58:06.992029Z|runtime|a910eaa0-1ad1-461f-8384-d73d47923422]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+[MFLOG|0|2022-06-20T14:58:06.992252Z|runtime|26986289-fc26-491e-9534-587bf9b75167]    return callback(args, kwargs)
+[MFLOG|0|2022-06-20T14:58:06.992478Z|runtime|7ce66af8-e874-4fad-90fa-49a9ce4e8475]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+[MFLOG|0|2022-06-20T14:58:06.992711Z|runtime|4f2baad1-e8c5-4700-b90a-d72a85eef119]    return f(get_current_context(), args, kwargs)
+[MFLOG|0|2022-06-20T14:58:06.992956Z|runtime|38cee2d6-280a-4fc1-bdd5-9101008c3494]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/cli.py", line 556, in step
+[MFLOG|0|2022-06-20T14:58:06.993181Z|runtime|0f7c37f7-443b-4fd0-a28d-c065655e1be6]    task.run_step(
+[MFLOG|0|2022-06-20T14:58:06.993411Z|runtime|8da91a09-4ffa-4a1a-a91b-b8925668c405]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 554, in run_step
+[MFLOG|0|2022-06-20T14:58:06.993643Z|runtime|f182cd96-8089-449f-b478-7fe8a963456b]    self._exec_step_function(step_func)
+[MFLOG|0|2022-06-20T14:58:06.993873Z|runtime|fc9b5967-4dc8-4988-a266-9753d0ac3a4e]  File "/home/dara/anaconda3/lib/python3.9/site-packages/metaflow/task.py", line 53, in _exec_step_function
+[MFLOG|0|2022-06-20T14:58:06.994097Z|runtime|76cd586b-4b9e-4d2b-b370-44013efb776a]    step_function()
+[MFLOG|0|2022-06-20T14:58:06.994323Z|runtime|dc70839e-0ee1-496d-ac14-7ac8a99ac0b5]  File "/home/dara/Documentos/UnB/AILAB/PGDF - OSIRIS/studies-for-the-laboratory/MetaFlow/text-classification/text-classification.py", line 54, in train
+[MFLOG|0|2022-06-20T14:58:06.994550Z|runtime|1b3f3684-31f0-4a75-8a28-9cccab5b2316]    grid_search = GridSearchCV(estimator=self.pipeline, param_grid=self.parameters, n_jobs=-1, verbose=1, scoring=self.scoring, refit='f1_micro')
+[MFLOG|0|2022-06-20T14:58:06.994776Z|runtime|8ada771f-2b17-4164-afd3-a3b3df3fb2e6]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 1388, in __init__
+[MFLOG|0|2022-06-20T14:58:06.994997Z|runtime|4b913b11-f96a-400f-bd29-e12b60c4907a]    _check_param_grid(param_grid)
+[MFLOG|0|2022-06-20T14:58:06.995216Z|runtime|b41461a1-89be-41f3-a690-50dc930ed007]  File "/home/dara/anaconda3/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 334, in _check_param_grid
+[MFLOG|0|2022-06-20T14:58:06.995455Z|runtime|8a2e63cf-38e6-4ecf-8111-c11a8c26c95b]    raise ValueError(
+[MFLOG|0|2022-06-20T14:58:06.995676Z|runtime|18d56584-ce86-4416-817f-07879d49209d]ValueError: Parameter grid for parameter (vect__ strip_accents) needs to be a list or numpy array, but got (<class 'NoneType'>). Single values need to be wrapped in a list with one element.
+[MFLOG|0|2022-06-20T14:58:06.995908Z|runtime|a72175c2-54c9-4888-9844-a76e3f06f47e]
+[MFLOG|0|2022-06-20T14:58:06.996704Z|runtime|c5689a78-830f-49ab-a5f5-a8304de3f21b]Task failed.
