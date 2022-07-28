@@ -6,6 +6,8 @@ from torch import optim
 import torch.utils.data as data
 
 import torchvision.transforms as transforms
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import cohen_kappa_score
 
 import matplotlib.pyplot as plt
@@ -441,7 +443,7 @@ def main():
 
   params, optimizer, scheduler, device, criterion, model = config_params()
 
-  EPOCHS = 2
+  EPOCHS = 20
   best_valid_loss = float('inf')
   experiment_data = []
 
@@ -481,6 +483,19 @@ def main():
   images, labels, probs, file_names = get_predictions(model, test_iterator, device)
   pred_labels = torch.div(torch.argmax(probs, 1), 2, rounding_mode='floor')
 
+  def plot_confusion_matrix(labels, pred_labels, classes):
+    
+    fig = plt.figure(figsize = (10, 10));
+    ax = fig.add_subplot(1, 1, 1);
+    cm = confusion_matrix(labels, pred_labels);
+    cm = ConfusionMatrixDisplay(cm, display_labels = classes);
+    cm.plot(values_format = 'd', cmap = 'Blues', ax = ax)
+    plt.xticks(rotation = 20)
+    plt.savefig('./model/'+ EXPERIMENT+ '_confusion_matrix.png')
+
+  classes = {'NextPage':0, 'FirstPage':1}
+  plot_confusion_matrix(labels, pred_labels, classes)
+
   def report():
     report_file_path = './report_final.json'
     export_report(EXPERIMENT, 
@@ -502,20 +517,15 @@ def main():
     mlflow.log_param('INPUT_DIM', INPUT_DIM)
     mlflow.log_param('OUTPUT_DIM', OUTPUT_DIM)
     mlflow.log_param('OUTPUT_METRIC', OUTPUT_METRIC)
-    mlflow.log_param('NN', NN)
-    mlflow.log_param('FINETUNNING', FINETUNNING)
     mlflow.log_param('SEED', SEED)
-    mlflow.log_param('N_IMAGES', N_IMAGES)
     mlflow.log_param('BATCH_SIZE', BATCH_SIZE)
-    mlflow.log_param('FOUND_LR', FOUND_LR)
     mlflow.log_param('EPOCHS', EPOCHS)
     mlflow.log_metric('val_loss', test_loss)
     mlflow.log_metric('val_acc', test_acc)
     mlflow.log_metric('val_kappa', test_kappa)
     mlflow.log_metric('val_acc_2', test_acc_2)
     mlflow.log_metric('val_kappa_2', test_kappa_2)
-    # mlflow.log_params(report.tobacco800_input_3_classes_4_nn_effnetB0_FT_Layer11)
-
+   
 
     tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
