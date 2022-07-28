@@ -60,7 +60,6 @@ TEST_LABEL_PATH = './base/test.csv'
 
 MODEL_PATH = './model/'
 
-
 def set_seeds():
   random.seed(SEED)
   np.random.seed(SEED)
@@ -198,9 +197,7 @@ def normalize_image(image):
     return image
 
 def concat_images(imga, imgb, imgc):
-    """
-    Combines three color image ndarrays side-by-side.
-    """
+    
     ha,wa = imga.shape[:2]
     hb,wb = imgb.shape[:2]
     hc,wc = imgc.shape[:2]
@@ -383,8 +380,6 @@ def get_predictions(model, iterator, device):
             next_page = next_page.to(device)
             
             y_pred = model(prev_page, curr_page, next_page)
-            
-            #concat_images(prev_page.cpu(), curr_page.cpu(), next_page.cpu())
 
             prev_page_images.append(prev_page.cpu())
             curr_page_images.append(curr_page.cpu())
@@ -510,7 +505,6 @@ def main():
                 test_kappa_2, 
                 report_file_path)
     
-#   report = report()
 
   with mlflow.start_run():
     mlflow.log_param('DATA', DATA)
