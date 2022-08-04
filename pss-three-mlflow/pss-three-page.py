@@ -19,6 +19,10 @@ print(EXPERIMENT)
 #Importações necessarias
 import argparse
 import torch
+import mlflow.pytorch
+import pytorch_lightning as pl
+from argparse import ArgumentParser
+from mlflow.tracking import MlflowClient
 
 import torch.nn as nn
 import torch.nn.functional as F
@@ -63,12 +67,6 @@ import re
 from utils import *
 from nn_modules import ThreePagesEffModule
 
-import mlflow.pytorch
-
-#Ativando autolog
-mlflow.pytorch.autolog()
-
-#----------------------------------------------------------------------------------------------------------------------
 SEED = 1234
 
 random.seed(SEED)
@@ -77,10 +75,8 @@ torch.manual_seed(SEED)
 torch.cuda.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
 
-#-----------------------------------------------------------------------------------------------------
 model = ThreePagesEffModule(OUTPUT_DIM, False, 14)
 
-#--------------------------------------------------------------------------------------------------------
 #Data Processing
 pretrained_size = (224,224)
 pretrained_means = [0.485, 0.456, 0.406]
@@ -100,11 +96,11 @@ transform = transforms.Compose([
                             transforms.ToTensor(),
                             transforms.Lambda(lambda x: torch.cat([x, x, x], 0))
                             #transforms.Normalize(mean = pretrained_means, std = pretrained_stds)
-                       ])
+                    ])
 
-PAGE_IMGS_PATH = './database_tobacoo800/SinglePageTIF/'
-TRAIN_LABEL_PATH = './database_tobacoo800/train.csv'
-TEST_LABEL_PATH = './database_tobacoo800/test.csv'
+PAGE_IMGS_PATH = './base/SinglePageTIF/'
+TRAIN_LABEL_PATH = './base/train.csv'
+TEST_LABEL_PATH = './base/test.csv'
 
 df_train = pd.read_csv(TRAIN_LABEL_PATH, sep=';', skiprows=0, low_memory=False)
 df_test = pd.read_csv(TEST_LABEL_PATH,sep=';', skiprows=0, low_memory=False)
@@ -148,9 +144,7 @@ df_test = add_extended_class_column(df_test)
 df_val = df_train.iloc[-200:,:]
 df_train = df_train.iloc[:-200,:]
 
-abel2Idx = {'single page': 3,'first of many': 2,'middle': 1,'last page':0}
 
-#---------------------------------------------------------------------------------------------------------------
 class ThreePages(data.Dataset):
     'Characterizes a dataset for PyTorch'
     
@@ -216,13 +210,14 @@ class ThreePages(data.Dataset):
             file_name
         )
 
+label2Idx = {'single page': 3,'first of many': 2,'middle': 1,'last page':0}
+
 train_data = ThreePages(df_train,PAGE_IMGS_PATH, label2Idx, transform )
 
 valid_data = ThreePages(df_val,PAGE_IMGS_PATH, label2Idx, transform )
 
 test_data = ThreePages(df_test,PAGE_IMGS_PATH, label2Idx, transform )
 
-#---------------------------------------------------------------------------------------
 #Plotando imagens normalizadas
 def normalize_image(image):
     image_min = image.min()
@@ -274,39 +269,34 @@ def plot_images(images, labels, classes, file_names, normalize = True):
 
         ax.imshow(concat_images(prev_image, curr_image, next_page))
         ax.set_title(f'{classes[labels[i]]}\n' \
-                     f'{file_names[i]}')   
+                    f'{file_names[i]}')   
         ax.axis('off')
 
 N_IMAGES = 25
 
 images, labels, file_names = zip(*[(image, label, file_name) for image, label, file_name in 
-                           [train_data[i] for i in range(N_IMAGES)]])
+                        [train_data[i] for i in range(N_IMAGES)]])
 
 classes = {3: 'single page',2: 'first of many',1:'middle',0:'last page'}
-
-#prev_images, curr_images = images[0]
-
 plot_images(images, labels, classes, file_names)
 
-#--------------------------------------------------------------------------------------------------------------
-BATCH_SIZE = 32
 
+BATCH_SIZE = 32
 train_iterator = data.DataLoader(train_data, 
-                                 batch_size = BATCH_SIZE, shuffle=False)
+                                batch_size = BATCH_SIZE, shuffle=False)
 
 valid_iterator = data.DataLoader(valid_data, 
-                                 batch_size = BATCH_SIZE)
+                                batch_size = BATCH_SIZE)
 test_iterator = data.DataLoader(test_data, 
-                                 batch_size = BATCH_SIZE)
+                                batch_size = BATCH_SIZE)
 
-#-------------------------------------------------------------------------------------------
 #Train model
 FOUND_LR = 5e-3
 
 params = [
-          {'params': model.base_model.parameters(), 'lr': FOUND_LR / 10},
-          {'params': model.classifier.parameters()}
-         ]
+        {'params': model.base_model.parameters(), 'lr': FOUND_LR / 10},
+        {'params': model.classifier.parameters()}
+        ]
 
 optimizer = optim.Adam(params, lr = FOUND_LR)
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=10, verbose=True)
@@ -411,22 +401,16 @@ def evaluate(model, iterator, criterion, device):
         
     return epoch_loss / len(iterator), epoch_acc / len(iterator), epoch_kappa / len(iterator), epoch_acc_2 / len(iterator), epoch_kappa_2 / len(iterator)
 
-#Verificando quanto tempo leva cada epoca
 def epoch_time(start_time, end_time):
     elapsed_time = end_time - start_time
     elapsed_mins = int(elapsed_time / 60)
     elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
     return elapsed_mins, elapsed_secs
 
-#----------------------------------------------------------
 #Train
-
 EPOCHS = 2
-
 best_valid_loss = float('inf')
-
 experiment_data = []
-
 for epoch in range(EPOCHS):
     
     start_time = time.monotonic()
@@ -459,5 +443,112 @@ print(EXPERIMENT)
 print(experiment_df.sort_values(by=['valid_loss']).iloc[0])
 train_loss, valid_loss, train_acc,valid_acc,test_kappa,valid_kappa,train_acc_2,valid_acc_2,train_kappa_2,valid_kappa_2,start,end = experiment_df.sort_values(by=['valid_loss']).iloc[0]
 
-#---------------------------------------------------------------------------------
+model.load_state_dict(torch.load('./model/'+ EXPERIMENT+ '.pt'))
 
+test_loss, test_acc, test_kappa, test_acc_2, test_kappa_2 = evaluate(model, test_iterator, criterion, device)
+
+print(f'\t Val. Loss: {test_loss:.3f} |  Val. Acc: {test_acc*100:.2f}% |  Val. Kappa: {test_kappa*100:.2f}% |  Val. Acc 2: {test_acc_2*100:.2f}% |  Val. Kappa 2: {test_kappa_2*100:.2f}%')
+
+#Examinando o modelo
+def get_predictions(model, iterator):
+
+    model.eval()
+
+    prev_page_images = []
+    curr_page_images = []
+    next_page_images = []
+    
+    labels = []
+    probs = []
+    file_names = []
+
+    with torch.no_grad():
+
+        for (x, y, name) in iterator:
+
+            prev_page, curr_page, next_page = x
+            prev_page = prev_page.to(device)
+            curr_page = curr_page.to(device)
+            next_page = next_page.to(device)
+            
+            y_pred = model(prev_page, curr_page, next_page)
+
+            prev_page_images.append(prev_page.cpu())
+            curr_page_images.append(curr_page.cpu())
+            next_page_images.append(next_page.cpu())
+
+            labels.append(torch.div(y.cpu(), 2, rounding_mode='trunc'))
+            probs.append(y_pred.cpu())
+            file_names.append(name)
+
+    prev_page_images = torch.cat(prev_page_images, dim = 0)
+    curr_page_images = torch.cat(curr_page_images, dim = 0)
+    next_page_images = torch.cat(next_page_images, dim = 0)    
+    
+    labels = torch.cat(labels, dim = 0)
+    probs = torch.cat(probs, dim = 0)
+    file_names = list(sum(file_names, ()))
+
+    return [prev_page_images, curr_page_images, next_page_images] , labels, probs, file_names
+
+images, labels, probs, file_names = get_predictions(model, test_iterator)
+pred_labels = torch.div(torch.argmax(probs, 1), 2, rounding_mode='trunc')
+
+def plot_confusion_matrix(labels, pred_labels, classes):
+    
+    fig = plt.figure(figsize = (10, 10));
+    ax = fig.add_subplot(1, 1, 1);
+    cm = confusion_matrix(labels, pred_labels);
+    cm = ConfusionMatrixDisplay(cm, display_labels = classes);
+    cm.plot(values_format = 'd', cmap = 'Blues', ax = ax)
+    plt.xticks(rotation = 20)
+    plt.savefig('./model/'+ EXPERIMENT+ '_confusion_matrix.png')
+
+classes = {'NextPage':0, 'FirstPage':1}
+
+plot_confusion_matrix(labels, pred_labels, classes)
+
+report_file_path = './report_final.json'
+export_report(EXPERIMENT, 
+              labels, 
+              pred_labels, 
+              list(classes.keys()),
+              valid_loss, 
+              valid_acc_2, 
+              valid_kappa_2,               
+              test_loss, 
+              test_acc_2, 
+              test_kappa_2, 
+              report_file_path) 
+
+def print_auto_logged_info(r):
+    tags = {k: v for k, v in r.data.tags.items() if not k.startswith("mlflow.")}
+    artifacts = [f.path for f in MlflowClient().list_artifacts(r.info.run_id, "model")]
+
+with mlflow.start_run() as run:
+    mlflow.log_param('DATA', DATA)
+    mlflow.log_param('INPUT_DIM', INPUT_DIM)
+    mlflow.log_param('OUTPUT_DIM', OUTPUT_DIM)
+    mlflow.log_param('OUTPUT_METRIC', OUTPUT_METRIC)
+    mlflow.log_param('SEED', SEED)
+    mlflow.log_param('BATCH_SIZE', BATCH_SIZE)
+    mlflow.log_param('EPOCHS', EPOCHS)
+
+    mlflow.log_metric('Train_loss', train_loss)
+    mlflow.log_metric('Train_acc', train_acc)
+    mlflow.log_metric('Train_kappa', train_kappa)
+    mlflow.log_metric('Train_acc_2', train_acc_2)
+    mlflow.log_metric('Train_kappa_2', train_kappa_2)
+    mlflow.log_metric('Valid_loss', valid_loss)
+    mlflow.log_metric('Val_acc', valid_acc)
+    mlflow.log_metric('Val_kappa', valid_kappa)
+    mlflow.log_metric('Val_acc_2', valid_acc_2)
+    mlflow.log_metric('Val_kappa_2', valid_kappa_2)
+
+print_auto_logged_info(mlflow.get_run(run_id=run.info.run_id))
+
+
+
+
+
+    
