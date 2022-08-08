@@ -521,10 +521,6 @@ export_report(EXPERIMENT,
               test_kappa_2, 
               report_file_path) 
 
-def print_auto_logged_info(r):
-    tags = {k: v for k, v in r.data.tags.items() if not k.startswith("mlflow.")}
-    artifacts = [f.path for f in MlflowClient().list_artifacts(r.info.run_id, "model")]
-
 with mlflow.start_run() as run:
     mlflow.log_param('DATA', DATA)
     mlflow.log_param('INPUT_DIM', INPUT_DIM)
@@ -545,7 +541,7 @@ with mlflow.start_run() as run:
     mlflow.log_metric('Val_acc_2', valid_acc_2)
     mlflow.log_metric('Val_kappa_2', valid_kappa_2)
 
-print_auto_logged_info(mlflow.get_run(run_id=run.info.run_id))
+    mlflow.log_artifact('./model/'+ EXPERIMENT+ '_confusion_matrix.png')
 
 
 
